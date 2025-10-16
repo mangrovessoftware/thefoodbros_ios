@@ -1,9 +1,3 @@
-//
-//  ChoiceScreen.swift
-//  FoodBros
-//
-//  Created by Rifluxyss on 24/09/25.
-//
 
 import SwiftUI
 

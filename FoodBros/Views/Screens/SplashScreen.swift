@@ -1,9 +1,3 @@
-//
-//  SplashScreen.swift
-//  FoodBros
-//
-//  Created by Rifluxyss on 12/09/25.
-//
 
 import SwiftUI
 

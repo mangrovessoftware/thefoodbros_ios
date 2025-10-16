@@ -1,10 +1,3 @@
-//
-//  LoginScreen.swift
-//  FoodBros
-//
-//  Created by Rifluxyss on 11/09/25.
-//
-
 import SwiftUI
 
 struct LoginScreen: View {

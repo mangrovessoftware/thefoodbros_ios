@@ -43,12 +43,15 @@ struct EventBookingHomeScreen: View {
         Group {
             if #available(iOS 16.0, *) {
                 NavigationStack {
-                    gradientTitle
                     content
+                        .navigationTitle("Event Booking")
+                        .navigationBarTitleDisplayMode(.inline)
                 }
             } else {
                 NavigationView {
                     content
+                        .navigationTitle("Event Booking")
+                        .navigationBarTitleDisplayMode(.inline)
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
             }

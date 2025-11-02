@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct SplashScreen: View {
-    @State private var showLoginScreen: Bool = false
+    @State private var showWelcomeScreen: Bool = false
     
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -17,19 +17,20 @@ struct SplashScreen: View {
                     }
                     
                     // Hidden navigation link
-                    NavigationLink("", destination: LoginScreen(), isActive: $showLoginScreen)
+                    NavigationLink("", destination: WelcomeScreen(), isActive: $showWelcomeScreen)
                         .hidden()
                 }
                 .onAppear {
                     // Navigate after 2 seconds
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        showLoginScreen = true
+                        showWelcomeScreen = true
                     }
                 }
             }
         }
     }
 }
+
 extension SplashScreen {
     var backgroundView: some View {
         Color.appThemeGradient

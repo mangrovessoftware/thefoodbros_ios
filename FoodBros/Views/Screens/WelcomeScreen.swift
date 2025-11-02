@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct WelcomeScreen: View {
+    
+    var title: String = AppStrings.welcomeTitle
+    var subtitle: String = AppStrings.welcomeSubtitle
+    
     var body: some View {
         ZStack {
             backgroundView
@@ -47,13 +51,13 @@ extension WelcomeScreen {
     
     var welcomeTextSection: some View {
         VStack(spacing: 15) {
-            Text("Welcome to The Food Bros")
+            Text(title)
                 .font(.system(size: 28, weight: .heavy))
                 .foregroundColor(Color(red: 0.75, green: 0.12, blue: 0.18))
                 .multilineTextAlignment(.center)
                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
             
-            Text("Indulge in a gourmet experience and let us elevate your events. From exquisite dinners to lavish celebrations, we craft every detail to perfection.")
+            Text(subtitle)
                 .font(.system(size: 18, weight: .medium))
                 .foregroundColor(.black.opacity(0.75))
                 .multilineTextAlignment(.center)

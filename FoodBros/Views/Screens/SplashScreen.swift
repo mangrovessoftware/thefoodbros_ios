@@ -2,36 +2,41 @@
 import SwiftUI
 
 struct SplashScreen: View {
-    @State private var showWelcomeScreen: Bool = false
+    @State private var isAnimating = false
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                ZStack {
+        ZStack {
+            backgroundView
             
-                    backgroundView
-                    
-                    VStack(spacing: 30) {
-                        logoSection
-                        titleSection
-                    }
-                    
-                    // Hidden navigation link
-                    NavigationLink("", destination: WelcomeScreen(), isActive: $showWelcomeScreen)
-                        .hidden()
-                }
-                .onAppear {
-                    // Navigate after 2 seconds
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        showWelcomeScreen = true
-                    }
-                }
+            VStack(spacing: 30) {
+                logoSection
+                titleSection
             }
+            .opacity(isAnimating ? 1 : 0)
+            .scaleEffect(isAnimating ? 1 : 0.9)
+            .animation(.easeInOut(duration: 0.8), value: isAnimating)
+        }
+        .onAppear {
+            startSplashSequence()
         }
     }
 }
 
 extension SplashScreen {
+    
+    func startSplashSequence() {
+        withAnimation {
+            isAnimating = true
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            NotificationCenter.default.post(
+                name: NotificationIdentifiers.hideSplashScreen,
+                object: nil
+            )
+        }
+    }
+    
     var backgroundView: some View {
         Color.appThemeGradient
         .edgesIgnoringSafeArea(.all)

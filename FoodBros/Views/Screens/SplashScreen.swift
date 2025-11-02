@@ -55,7 +55,7 @@ extension SplashScreen {
         VStack(spacing: 6) {
             Text("The Food Bros")
                 .font(.system(size: 26, weight: .bold))
-                .foregroundColor(.black)
+                .foregroundColor(Color(.primary))
 
             Text("Quality || Food")
                 .font(.system(size: 16, weight: .medium))

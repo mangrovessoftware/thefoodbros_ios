@@ -9,7 +9,7 @@ struct ChoiceScreen: View {
         if #available(iOS 16.0, *) {
             NavigationStack {
                 ZStack {
-//                    backgroundView
+                    backgroundView
                     
                     VStack(spacing: 25) {
                         logoSection
@@ -33,16 +33,7 @@ struct ChoiceScreen: View {
 
 private extension ChoiceScreen {
     var backgroundView: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.0, green: 0.7, blue: 0.7),
-                Color(red: 0.0, green: 0.4, blue: 0.6),
-                Color(red: 0.0, green: 0.2, blue: 0.3)
-                
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        Color.appThemeGradient
         .edgesIgnoringSafeArea(.all)
     }
     
@@ -60,16 +51,7 @@ private extension ChoiceScreen {
         VStack(spacing: 8) {
             Text("Welcome Machi..! \nWhat’s your plan for today?")
                 .font(.system(size: 23, weight: .bold, design: .rounded))
-                .foregroundStyle(
-                    LinearGradient(
-                        gradient: Gradient(colors: [
-                            Color(red: 0, green: 120/255, blue: 200/255),
-                            Color(red: 0, green: 78/255, blue: 139/255)
-                        ]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+                .foregroundColor(Color(.primary))
                 .multilineTextAlignment(.leading)
         }
         .padding()
@@ -92,7 +74,7 @@ private extension ChoiceScreen {
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(
-                    LinearGradient(colors: [Color.pink, Color.purple], startPoint: .leading, endPoint: .trailing)
+                    Color.eventBookingBtn
                 )
                 .cornerRadius(25)
                 .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 3)
@@ -115,7 +97,7 @@ private extension ChoiceScreen {
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(
-                    LinearGradient(colors: [Color.cyan, Color.teal], startPoint: .leading, endPoint: .trailing)
+                    Color.foodOrderBtn
                 )
                 .cornerRadius(25)
                 .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 3)

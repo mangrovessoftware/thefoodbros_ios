@@ -68,7 +68,7 @@ extension WelcomeScreen {
         VStack(spacing: 15) {
             Text(title)
                 .font(.system(size: 28, weight: .heavy))
-                .foregroundColor(Color(red: 0.75, green: 0.12, blue: 0.18))
+                .foregroundColor(Color(.primary))
                 .multilineTextAlignment(.center)
                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
             

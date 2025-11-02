@@ -25,4 +25,22 @@ extension Color {
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
+    
+    static let eventBookingBtn = LinearGradient(
+        colors: [
+            Color(red: 215/255, green: 38/255, blue: 56/255),  // #D72638
+            Color(red: 255/255, green: 90/255, blue: 95/255) 
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
+    static let foodOrderBtn = LinearGradient(
+        colors: [
+            Color(red: 255/255, green: 130/255, blue: 67/255), 
+            Color(red: 255/255, green: 211/255, blue: 145/255)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
 }

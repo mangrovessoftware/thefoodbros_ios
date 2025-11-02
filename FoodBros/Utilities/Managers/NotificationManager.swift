@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum NotificationIdentifiers {
+    static let hideSplashScreen = Notification.Name("HideSplashScreenNotification")
+}

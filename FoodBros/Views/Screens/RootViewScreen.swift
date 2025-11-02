@@ -8,8 +8,45 @@
 import SwiftUI
 
 struct RootViewScreen: View {
+    @State private var isDataLoaded = false
+    @State private var notificationObserver: NSObjectProtocol?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            if isDataLoaded {
+                WelcomeScreen()
+                    .transition(.opacity)
+            } else {
+                SplashScreen()
+                    .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.5), value: isDataLoaded)
+        .onAppear {
+            addNotificationObserver()
+        }
+        .onDisappear {
+            removeNotificationObserver()
+        }
+    }
+}
+
+extension RootViewScreen {
+    func addNotificationObserver() {
+        notificationObserver = NotificationCenter.default.addObserver(
+            forName: NotificationIdentifiers.hideSplashScreen,
+            object: nil,
+            queue: .main
+        ) { _ in
+            isDataLoaded = true
+        }
+    }
+    
+    func removeNotificationObserver() {
+        if let observer = notificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+            notificationObserver = nil
+        }
     }
 }
 

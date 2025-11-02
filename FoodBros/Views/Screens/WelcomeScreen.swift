@@ -9,25 +9,40 @@ import SwiftUI
 
 struct WelcomeScreen: View {
     
+    @State private var toShowEventChoiceScreen: Bool = false
+    
     var title: String = AppStrings.welcomeTitle
     var subtitle: String = AppStrings.welcomeSubtitle
     
     var body: some View {
-        ZStack {
-            backgroundView
-            
-            VStack(spacing: 40) {
-                Spacer()
-                
-                logoSection
-                
-                welcomeTextSection
-                
-                Spacer()
-                
-                getStartedButton
-                
-                Spacer()
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                ZStack {
+                    backgroundView
+                    
+                    VStack(spacing: 40) {
+                        Spacer()
+                        
+                        logoSection
+                        
+                        welcomeTextSection
+                        
+                        Spacer()
+                        
+                        getStartedButton
+                        
+                        Spacer()
+                    }
+                }
+                .background(
+                    NavigationLink(
+                        destination: ChoiceScreen(),
+                        isActive: $toShowEventChoiceScreen
+                    ) {
+                        EmptyView()
+                    }
+                    .hidden()
+                )
             }
         }
     }
@@ -67,9 +82,9 @@ extension WelcomeScreen {
     
     var getStartedButton: some View {
         Button(action: {
-            print("Navigate to next screen")
+            toShowEventChoiceScreen = true
         }) {
-            Text("Experience Now")
+            Text("Book Your Event")
                 .fontWeight(.bold)
                 .foregroundColor(.white)
                 .padding()

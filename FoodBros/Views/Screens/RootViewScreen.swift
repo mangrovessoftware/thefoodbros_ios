@@ -15,10 +15,8 @@ struct RootViewScreen: View {
         ZStack {
             if isDataLoaded {
                 WelcomeScreen()
-                    .transition(.opacity)
             } else {
                 SplashScreen()
-                    .transition(.opacity)
             }
         }
         .animation(.easeInOut(duration: 0.5), value: isDataLoaded)

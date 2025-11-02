@@ -46,14 +46,14 @@ extension SplashScreen {
     }
     
     var titleSection: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 6) {
             Text("The Food Bros")
-                .font(.system(size: 28, weight: .heavy))
-                .foregroundColor(.white)
-            
+                .font(.system(size: 26, weight: .bold))
+                .foregroundColor(.black)
+
             Text("Quality || Food")
-                .font(.system(size: 14))
-                .foregroundColor(.white.opacity(0.7))
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(.black.opacity(0.5))
         }
     }
 }

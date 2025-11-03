@@ -11,7 +11,7 @@ import SwiftUI
 struct FoodBrosApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashScreen()
+            RootViewScreen()
             
         }
     }

@@ -17,7 +17,7 @@ struct AppButtons {
         case submit = "Submit"
     }
     
-    static func primary(type: ButtonType, action: @escaping () -> Void) -> some View {
+    static func primary(type: ButtonType, disabled: Bool = true, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(type.rawValue)
                 .fontWeight(.bold)
@@ -29,5 +29,7 @@ struct AppButtons {
                 .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 6)
                 .padding(.horizontal, 40)
         }
+        .disabled(disabled)
+        .opacity(disabled ? 0.5 : 1.0)
     }
 }

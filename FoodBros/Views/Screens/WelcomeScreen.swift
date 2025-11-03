@@ -29,7 +29,7 @@ struct WelcomeScreen: View {
                         
                         Spacer()
                         
-                        AppButtons.primary(type: .bookYourEvent) {
+                        AppButtons.primary(type: .bookYourEvent, disabled: false) {
                             toShowEventChoiceScreen = true
                         }
                         

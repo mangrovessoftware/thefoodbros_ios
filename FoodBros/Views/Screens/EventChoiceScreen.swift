@@ -29,22 +29,35 @@ struct EventChoiceScreen: View {
     ]
     
     var body: some View {
-        ZStack {
-            AppBackgrounds.gradientBackground
-                .ignoresSafeArea()
-            
-            VStack(spacing: 30) {
-                
-                titleSection
-                
-                eventGridSection
-                
-                AppButtons.primary(type: .continueAction) {
-                    guard let selectedEvent else { return }
-                    toShowEventBookingMainTabView = true
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                ZStack {
+                    AppBackgrounds.gradientBackground
+                        .ignoresSafeArea()
+                    
+                    VStack(spacing: 30) {
+                        
+                        titleSection
+                        
+                        eventGridSection
+                        
+                        AppButtons.primary(type: .continueAction, disabled: selectedEvent == nil ) {
+                            toShowEventBookingMainTabView = true
+                        }
+                    }
+                    .padding(.top, 50)
                 }
+                .background(
+                    NavigationLink(
+                        destination: EventBookingMainTabView(),
+                        isActive: $toShowEventBookingMainTabView
+                    ) {
+                        EmptyView()
+                    }
+                    .hidden()
+                )
+                .navigationBarBackButtonHidden()
             }
-            .padding(.top, 50)
         }
     }
 }

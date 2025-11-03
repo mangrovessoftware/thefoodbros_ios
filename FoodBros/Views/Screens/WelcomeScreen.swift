@@ -18,18 +18,20 @@ struct WelcomeScreen: View {
         if #available(iOS 16.0, *) {
             NavigationStack {
                 ZStack {
-                    backgroundView
+                    AppBackgrounds.gradientBackground
                     
                     VStack(spacing: 40) {
                         Spacer()
                         
-                        logoSection
+                        AppIcons.appLogo()
                         
                         welcomeTextSection
                         
                         Spacer()
                         
-                        getStartedButton
+                        AppButtons.primary(type: .bookYourEvent) {
+                            toShowEventChoiceScreen = true
+                        }
                         
                         Spacer()
                     }
@@ -50,20 +52,6 @@ struct WelcomeScreen: View {
 
 extension WelcomeScreen {
     
-    var backgroundView: some View {
-        Color.appThemeGradient
-        .edgesIgnoringSafeArea(.all)
-    }
-    
-    var logoSection: some View {
-        Image("AppLogo")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 150, height: 150)
-            .clipShape(Circle())
-            .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 5)
-    }
-    
     var welcomeTextSection: some View {
         VStack(spacing: 15) {
             Text(title)
@@ -76,24 +64,6 @@ extension WelcomeScreen {
                 .font(.system(size: 18, weight: .medium))
                 .foregroundColor(.black.opacity(0.75))
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-        }
-    }
-    
-    var getStartedButton: some View {
-        Button(action: {
-            toShowEventChoiceScreen = true
-        }) {
-            Text("Book Your Event")
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(
-                    Color.primaryActionBtn
-                )
-                .cornerRadius(14)
-                .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 6)
                 .padding(.horizontal, 40)
         }
     }

@@ -9,10 +9,10 @@ struct ChoiceScreen: View {
         if #available(iOS 16.0, *) {
             NavigationStack {
                 ZStack {
-                    backgroundView
+                    AppBackgrounds.gradientBackground
                     
                     VStack(spacing: 25) {
-                        logoSection
+                        AppIcons.appLogo()
                         titleSection
                         choiceSection
                         Spacer()
@@ -32,20 +32,6 @@ struct ChoiceScreen: View {
 }
 
 private extension ChoiceScreen {
-    var backgroundView: some View {
-        Color.appThemeGradient
-        .edgesIgnoringSafeArea(.all)
-    }
-    
-    var logoSection: some View {
-        Image("AppLogo")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 150, height: 150)
-            .clipShape(Circle())
-            .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 5)
-            
-    }
     
     var titleSection: some View {
         VStack(spacing: 8) {

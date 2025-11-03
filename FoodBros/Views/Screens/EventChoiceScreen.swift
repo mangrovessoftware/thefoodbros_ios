@@ -8,10 +8,39 @@
 import SwiftUI
 
 struct EventChoiceScreen: View {
+    
+    @State var toShowEventBookingMainTabView: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            AppBackgrounds.gradientBackground
+            
+            VStack(spacing: 30) {
+                
+                AppIcons.appLogo()
+                
+                titleSection
+                
+                AppButtons.primary(type: .continueAction) {
+                    
+                }
+            }
+        }
     }
 }
+
+extension EventChoiceScreen {
+    var titleSection: some View {
+        Text("Choose Your Event")
+            .font(.title.bold())
+            .foregroundColor(Color(.primary))
+    }
+}
+
+#Preview {
+    EventChoiceScreen()
+}
+
 
 #Preview {
     EventChoiceScreen()

@@ -6,10 +6,10 @@ struct SplashScreen: View {
     
     var body: some View {
         ZStack {
-            backgroundView
+            AppBackgrounds.gradientBackground
             
             VStack(spacing: 30) {
-                logoSection
+                AppIcons.appLogo()
                 titleSection
             }
             .opacity(isAnimating ? 1 : 0)
@@ -35,20 +35,6 @@ extension SplashScreen {
                 object: nil
             )
         }
-    }
-    
-    var backgroundView: some View {
-        Color.appThemeGradient
-        .edgesIgnoringSafeArea(.all)
-    }
-    
-    var logoSection: some View {
-        Image("AppLogo")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 150, height: 150)
-            .clipShape(Circle())
-            .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 5)
     }
     
     var titleSection: some View {

@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ChoiceScreen: View {
     @State private var animateButtons = false
-    @State private var showEventBookingTabView: Bool = false
+    @State private var showEventChoiceScreen: Bool = false
     
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -61,7 +61,7 @@ private extension ChoiceScreen {
         VStack(spacing: 25) {
 
             Button(action: {
-                showEventBookingTabView = true
+                showEventChoiceScreen = true
             }) {
                 HStack {
                     Image(systemName: "calendar")
@@ -107,8 +107,8 @@ private extension ChoiceScreen {
             }
             
             NavigationLink(
-                destination: EventBookingMainTabView(),
-                isActive: $showEventBookingTabView
+                destination: EventChoiceScreen(),
+                isActive: $showEventChoiceScreen
             ) {
                 EmptyView()
             }

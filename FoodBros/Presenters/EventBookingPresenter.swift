@@ -8,7 +8,7 @@
 import Foundation
 
 struct EventBookingPresenter {
-    func getEventCategory(completion: @escaping (_ eventCategories: [EventCategory]) -> Void)  {
-        EventBookingService().getEventCategory(completion: completion)
+    func getEventCategories(completion: @escaping (_ eventCategories: [EventCategory]) -> Void)  {
+        EventBookingService().getEventCategories(completion: completion)
     }
 }

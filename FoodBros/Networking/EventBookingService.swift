@@ -8,7 +8,7 @@
 import Foundation
 
 struct EventBookingService {
-    func getEventCategory(completion: @escaping (_ eventCategories: [EventCategory]) -> Void) {
+    func getEventCategories(completion: @escaping (_ eventCategories: [EventCategory]) -> Void) {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
             let eventCategories: [EventCategory] = [
                 EventCategory(name: "Wedding", iconName: "heart.fill"),

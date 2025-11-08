@@ -11,8 +11,8 @@ struct EventChoiceScreen: View {
     
     @State private var eventCategories: [EventCategory] = []
     @State private var selectedEvent: EventCategory? = nil
-    
     @State private var toShowEventBookingMainTabView: Bool = false
+    @State private var isLoading: Bool = false
     
     private let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -27,38 +27,50 @@ struct EventChoiceScreen: View {
                         .ignoresSafeArea()
                     
                     VStack(spacing: 30) {
-                        
                         titleSection
-                        
                         eventGridSection
                         
-                        AppButtons.primary(type: .continueAction, disabled: selectedEvent == nil ) {
+                        AppButtons.primary(
+                            type: .continueAction,
+                            disabled: selectedEvent == nil
+                        ) {
                             toShowEventBookingMainTabView = true
                         }
                     }
                     .padding(.top, 50)
+                    
+                    if isLoading {
+                        LoadingIndicator()
+                    }
                 }
                 .onAppear {
-                    EventBookingPresenter().getEventCategory { eventCategories in
-                        self.eventCategories = eventCategories
-                    }
+                    getEventCategories()
                 }
                 .background(
                     NavigationLink(
                         destination: EventBookingMainTabView(),
                         isActive: $toShowEventBookingMainTabView
-                    ) {
-                        EmptyView()
-                    }
-                    .hidden()
+                    ) { EmptyView() }
+                        .hidden()
                 )
                 .navigationBarBackButtonHidden()
+            }
+        }
+    }
+    
+    private func getEventCategories() {
+        isLoading = true
+        EventBookingPresenter().getEventCategories { eventCategories in
+            DispatchQueue.main.async {
+                self.eventCategories = eventCategories
+                self.isLoading = false
             }
         }
     }
 }
 
 extension EventChoiceScreen {
+    
     var titleSection: some View {
         Text("Choose Your Event")
             .font(.title.bold())
@@ -66,18 +78,12 @@ extension EventChoiceScreen {
     }
     
     var eventGridSection: some View {
-        ScrollView(.vertical, showsIndicators: true) {
+        ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(eventCategories) { event in
                     Button {
                         withAnimation(.spring()) {
-                            
-                            if selectedEvent?.id == event.id {
-                                selectedEvent = nil
-                            } else {
-                                selectedEvent = event
-                            }
-                            
+                            selectedEvent = selectedEvent?.id == event.id ? nil : event
                         }
                     } label: {
                         VStack(spacing: 8) {
@@ -103,16 +109,10 @@ extension EventChoiceScreen {
                 }
             }
             .padding(.horizontal)
-            .padding(.top)
-            .padding(.bottom, 20)
+            .padding(.vertical, 20)
         }
     }
 }
-
-#Preview {
-    EventChoiceScreen()
-}
-
 
 #Preview {
     EventChoiceScreen()

@@ -44,14 +44,14 @@ struct LoadingIndicator: View {
                             ),
                             lineWidth: 6
                         )
-                        .frame(width: 90, height: 90)
+                        .frame(width: 60, height: 60)
                         .rotationEffect(.degrees(rotate ? 360 : 0))
                         .animation(.linear(duration: 1.2).repeatForever(autoreverses: false), value: rotate)
                     
                     Image(systemName: eventIcons[currentIconIndex])
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 44, height: 44)
+                        .frame(width: 28, height: 28)
                         .foregroundColor(Color(.primary))
                         .shadow(color: .white.opacity(0.8), radius: 4)
                         .transition(.scale.combined(with: .opacity))

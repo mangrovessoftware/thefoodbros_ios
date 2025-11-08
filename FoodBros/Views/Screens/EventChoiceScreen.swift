@@ -9,19 +9,10 @@ import SwiftUI
 
 struct EventChoiceScreen: View {
     
+    @State private var eventCategories: [EventCategory] = []
     @State private var selectedEvent: EventCategory? = nil
-    @State private var toShowEventBookingMainTabView: Bool = false
     
-    let eventCategories: [EventCategory] = [
-        EventCategory(name: "Wedding", iconName: "heart.fill"),
-        EventCategory(name: "Birthday", iconName: "gift.fill"),
-        EventCategory(name: "Corporate Event", iconName: "briefcase.fill"),
-        EventCategory(name: "Baby Shower", iconName: "stork.fill"),
-        EventCategory(name: "Engagement", iconName: "diamond.fill"),
-        EventCategory(name: "Anniversary", iconName: "sparkles"),
-        EventCategory(name: "Festival", iconName: "sun.max.fill"),
-        EventCategory(name: "Private Party", iconName: "music.note.list")
-    ]
+    @State private var toShowEventBookingMainTabView: Bool = false
     
     private let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -46,6 +37,11 @@ struct EventChoiceScreen: View {
                         }
                     }
                     .padding(.top, 50)
+                }
+                .onAppear {
+                    EventBookingPresenter().getEventCategory { eventCategories in
+                        self.eventCategories = eventCategories
+                    }
                 }
                 .background(
                     NavigationLink(

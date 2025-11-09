@@ -45,6 +45,9 @@ struct EventBookingHomeScreen: View {
         .sheet(isPresented: $isEditing) {
             EventChoiceScreen(selectedEvent: $selectedEvent, isEditing: $isEditing)
         }
+        .navigationTitle("My Events")
+        .navigationBarTitleDisplayMode(.large)
+        .navigationBarBackButtonHidden()
     }
     
     private func getPromos() {

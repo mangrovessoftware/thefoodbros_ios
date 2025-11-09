@@ -27,7 +27,7 @@ struct EventBookingHomeScreen: View {
             isEditing = selectedEvent == nil
         }
         .sheet(isPresented: $isEditing) {
-            EventChoiceScreen()
+            EventChoiceScreen(selectedEvent: $selectedEvent, isEditing: $isEditing)
         }
     }
 }

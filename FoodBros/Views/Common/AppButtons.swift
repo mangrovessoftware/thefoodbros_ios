@@ -15,6 +15,7 @@ struct AppButtons {
         case learnMore = "Learn More"
         case cancel = "Cancel"
         case submit = "Submit"
+        case saveEvent = "Save Event"
     }
     
     static func primary(type: ButtonType, disabled: Bool = true, action: @escaping () -> Void) -> some View {

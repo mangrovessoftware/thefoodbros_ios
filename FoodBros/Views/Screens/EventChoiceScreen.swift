@@ -9,10 +9,10 @@ import SwiftUI
 
 struct EventChoiceScreen: View {
     
-    @State private var eventCategories: [EventCategory] = []
-    @State private var selectedEvent: EventCategory? = nil
+    @State var eventCategories: [EventCategory] = []
+    @Binding var selectedEvent: EventCategory?
     
-    @State private var toShowEventBookingMainTabView: Bool = false
+    @Binding var isEditing: Bool
     @State private var isLoading: Bool = false
     
     private let columns = [
@@ -30,10 +30,10 @@ struct EventChoiceScreen: View {
                 eventGridSection
                 
                 AppButtons.primary(
-                    type: .continueAction,
+                    type: .saveEvent,
                     disabled: selectedEvent == nil
                 ) {
-                    toShowEventBookingMainTabView = true
+                    isEditing = false
                 }
             }
             .padding(.top, 50)
@@ -45,14 +45,6 @@ struct EventChoiceScreen: View {
         .onAppear {
             getEventCategories()
         }
-        .background(
-            NavigationLink(
-                destination: EventBookingMainTabView(),
-                isActive: $toShowEventBookingMainTabView
-            ) { EmptyView() }
-                .hidden()
-        )
-        .navigationBarBackButtonHidden()
     }
     
     private func getEventCategories() {
@@ -111,6 +103,3 @@ extension EventChoiceScreen {
     }
 }
 
-#Preview {
-    EventChoiceScreen()
-}

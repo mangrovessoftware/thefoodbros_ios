@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ChoiceScreen: View {
     @State private var animateButtons = false
-    @State private var showEventChoiceScreen: Bool = false
+    @State private var showEventBookingHomeScreen: Bool = false
     
     var body: some View {
         ZStack {
@@ -43,7 +43,7 @@ private extension ChoiceScreen {
         VStack(spacing: 25) {
 
             Button(action: {
-                showEventChoiceScreen = true
+                showEventBookingHomeScreen = true
             }) {
                 HStack {
                     Image(systemName: "calendar")
@@ -89,8 +89,8 @@ private extension ChoiceScreen {
             }
             
             NavigationLink(
-                destination: EventChoiceScreen(),
-                isActive: $showEventChoiceScreen
+                destination: EventBookingHomeScreen(),
+                isActive: $showEventBookingHomeScreen
             ) {
                 EmptyView()
             }

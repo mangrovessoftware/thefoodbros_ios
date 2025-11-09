@@ -96,7 +96,7 @@ extension EventBookingHomeScreen {
                         Image(promoImage)
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 300, height: 180)
+                            .frame(width: UIScreen.main.bounds.width - 32, height: 180)
                             .clipped()
                             .cornerRadius(16)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)

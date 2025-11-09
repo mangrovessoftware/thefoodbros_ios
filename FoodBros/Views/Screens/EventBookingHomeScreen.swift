@@ -9,7 +9,10 @@ import SwiftUI
 
 struct EventBookingHomeScreen: View {
     @State private var selectedEvent: EventCategory?
+    @State private var promos: [Promo] = []
+    
     @State private var isEditing: Bool = false
+    @State private var isLoading: Bool = false
     
     var body: some View {
         ZStack {
@@ -19,15 +22,32 @@ struct EventBookingHomeScreen: View {
             VStack(spacing: 24) {
                 eventButton
                 
+                promoBanner
+                
                 Spacer()
             }
             .padding()
+            
+            if isLoading {
+                LoadingIndicator()
+            }
         }
         .onAppear {
             isEditing = selectedEvent == nil
+            getPromos()
         }
+        
         .sheet(isPresented: $isEditing) {
             EventChoiceScreen(selectedEvent: $selectedEvent, isEditing: $isEditing)
+        }
+    }
+    
+    private func getPromos() {
+        isLoading = true
+        
+        EventBookingPresenter().getPromos { promos in
+            self.promos = promos
+            isLoading = false
         }
     }
 }
@@ -66,6 +86,25 @@ extension EventBookingHomeScreen {
             .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
         }
         .buttonStyle(PlainButtonStyle())
+    }
+    
+    private var promoBanner: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 16) {
+                ForEach(promos) { banner in
+                    if let promoImage = banner.imageName {
+                        Image(promoImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 300, height: 180)
+                            .clipped()
+                            .cornerRadius(16)
+                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+        }
     }
 }
 

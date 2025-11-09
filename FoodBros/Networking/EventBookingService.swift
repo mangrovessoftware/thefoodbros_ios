@@ -9,7 +9,7 @@ import Foundation
 
 struct EventBookingService {
     func getEventCategories(completion: @escaping (_ eventCategories: [EventCategory]) -> Void) {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5, execute: {
             let eventCategories: [EventCategory] = [
                 EventCategory(name: "Wedding", iconName: "heart.fill"),
                 EventCategory(name: "Birthday", iconName: "gift.fill"),
@@ -24,6 +24,22 @@ struct EventBookingService {
             DispatchQueue.main.async {
                 completion(eventCategories)
             }
-        }
+        })
+    }
+    
+    func getPromos(completion: @escaping ([Promo]) -> Void) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5, execute: {
+            let promos: [Promo] = [
+                Promo(title: "Big Sale", subtitle: "Up to 50% off on selected items", imageName: "Banner", linkURL: nil, startDate: nil, endDate: nil),
+                Promo(title: "New Event", subtitle: "Join our special launch event", imageName: "Banner", linkURL: nil, startDate: nil, endDate: nil),
+                Promo(title: "Limited Offer", subtitle: "Get 1 month free subscription", imageName: "Banner", linkURL: nil, startDate: nil, endDate: nil),
+                Promo(title: "Exclusive Deals", subtitle: "Only for premium members", imageName: "Banner", linkURL: nil, startDate: nil, endDate: nil),
+                Promo(title: "Holiday Special", subtitle: "Festive discounts up to 70%", imageName: "Banner", linkURL: nil, startDate: nil, endDate: nil)
+            ]
+            
+            DispatchQueue.main.async {
+                completion(promos)
+            }
+        })
     }
 }

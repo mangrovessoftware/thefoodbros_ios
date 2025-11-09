@@ -11,4 +11,8 @@ struct EventBookingPresenter {
     func getEventCategories(completion: @escaping (_ eventCategories: [EventCategory]) -> Void)  {
         EventBookingService().getEventCategories(completion: completion)
     }
+    
+    func getPromos(completion: @escaping (_ promos: [Promo]) -> Void)  {
+        EventBookingService().getPromos(completion: completion)
+    }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Promo: Identifiable {
+struct Promo: Identifiable, Equatable {
     let id = UUID()
     let title: String?
     let subtitle: String?

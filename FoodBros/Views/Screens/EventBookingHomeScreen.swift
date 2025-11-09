@@ -115,45 +115,66 @@ extension EventBookingHomeScreen {
     }
     
     private var promoBanner: some View {
-        GeometryReader { proxy in
-            let horizontalPadding: CGFloat = 16
-            let cardWidth = proxy.size.width - (horizontalPadding * 2)
-            let cardHeight: CGFloat = 180
-            
-            TabView(selection: $currentPage) {
-                ForEach(promos.indices, id: \.self) { index in
-                    Group {
-                        if let promoImage = promos[index].imageName {
-                            Image(promoImage)
-                                .resizable()
-                                .scaledToFill()
+        VStack(spacing: 10) {
+            GeometryReader { proxy in
+                let horizontalPadding: CGFloat = 16
+                let cardWidth = proxy.size.width - (horizontalPadding * 2)
+                let cardHeight: CGFloat = 180
+                
+                TabView(selection: $currentPage) {
+                    ForEach(promos.indices, id: \.self) { index in
+                        Group {
+                            if let promoImage = promos[index].imageName {
+                                Image(promoImage)
+                                    .resizable()
+                                    .scaledToFill()
+                            } else {
+                                // Optional placeholder if imageName is nil
+                                Color.gray.opacity(0.2)
+                            }
                         }
+                        .frame(width: cardWidth, height: cardHeight)
+                        .clipped()
+                        .cornerRadius(16)
+                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                        .padding(.horizontal, horizontalPadding)
+                        .tag(index)
                     }
-                    .frame(width: cardWidth, height: cardHeight)
-                    .clipped()
-                    .cornerRadius(16)
-                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
-                    .padding(.horizontal, horizontalPadding)
-                    .tag(index)
+                }
+                .frame(height: cardHeight)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .animation(.easeInOut(duration: 0.35), value: currentPage)
+                .onAppear {
+                    restartAutoScrollIfNeeded()
+                }
+                .onChange(of: promos) { _ in
+                    if currentPage >= promos.count {
+                        currentPage = max(0, promos.count - 1)
+                    }
+                    restartAutoScrollIfNeeded()
+                }
+                .onDisappear {
+                    stopAutoScroll()
                 }
             }
-            .frame(height: cardHeight)
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .animation(.easeInOut(duration: 0.35), value: currentPage)
-            .onAppear {
-                restartAutoScrollIfNeeded()
-            }
-            .onChange(of: promos) { _ in
-                if currentPage >= promos.count {
-                    currentPage = max(0, promos.count - 1)
+            .frame(height: 180)
+            
+            HStack(spacing: 6) {
+                ForEach(0..<max(promos.count, 0), id: \.self) { index in
+                    Capsule()
+                        .fill(index == currentPage ? Color.red : Color.red.opacity(0.4))
+                        .frame(width: index == currentPage ? 18 : 6, height: 6)
+                        .animation(.easeInOut(duration: 0.25), value: currentPage)
+                        .onTapGesture {
+                            guard index < promos.count else { return }
+                            withAnimation(.easeInOut(duration: 0.35)) {
+                                currentPage = index
+                            }
+                        }
                 }
-                restartAutoScrollIfNeeded()
             }
-            .onDisappear {
-                stopAutoScroll()
-            }
+            .opacity(promos.count > 1 ? 1 : 0)
         }
-        .frame(height: 180)
     }
     
     private func restartAutoScrollIfNeeded() {

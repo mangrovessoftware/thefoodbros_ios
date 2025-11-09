@@ -15,38 +15,34 @@ struct WelcomeScreen: View {
     var subtitle: String = AppStrings.welcomeSubtitle
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                ZStack {
-                    AppBackgrounds.gradientBackground
-                    
-                    VStack(spacing: 40) {
-                        Spacer()
-                        
-                        AppIcons.appLogo()
-                        
-                        welcomeTextSection
-                        
-                        Spacer()
-                        
-                        AppButtons.primary(type: .bookYourEvent, disabled: false) {
-                            toShowEventChoiceScreen = true
-                        }
-                        
-                        Spacer()
-                    }
+        ZStack {
+            AppBackgrounds.gradientBackground
+            
+            VStack(spacing: 40) {
+                Spacer()
+                
+                AppIcons.appLogo()
+                
+                welcomeTextSection
+                
+                Spacer()
+                
+                AppButtons.primary(type: .bookYourEvent, disabled: false) {
+                    toShowEventChoiceScreen = true
                 }
-                .background(
-                    NavigationLink(
-                        destination: ChoiceScreen(),
-                        isActive: $toShowEventChoiceScreen
-                    ) {
-                        EmptyView()
-                    }
-                    .hidden()
-                )
+                
+                Spacer()
             }
         }
+        .background(
+            NavigationLink(
+                destination: ChoiceScreen(),
+                isActive: $toShowEventChoiceScreen
+            ) {
+                EmptyView()
+            }
+                .hidden()
+        )
     }
 }
 

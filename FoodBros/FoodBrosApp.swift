@@ -9,10 +9,29 @@ import SwiftUI
 
 @main
 struct FoodBrosApp: App {
+    
+    init() {
+        setupNavigationAppearance()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            RootViewScreen()
-            
+            if #available(iOS 16.0, *) {
+                NavigationStack {
+                    RootViewScreen()
+                }
+            }
         }
+    }
+    
+    func setupNavigationAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(named: "Primary") ?? .systemRed]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(named: "Primary") ?? .systemRed]
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
     }
 }

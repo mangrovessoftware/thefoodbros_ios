@@ -11,6 +11,7 @@ struct EventChoiceScreen: View {
     
     @State private var eventCategories: [EventCategory] = []
     @State private var selectedEvent: EventCategory? = nil
+    
     @State private var toShowEventBookingMainTabView: Bool = false
     @State private var isLoading: Bool = false
     
@@ -20,42 +21,38 @@ struct EventChoiceScreen: View {
     ]
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                ZStack {
-                    AppBackgrounds.gradientBackground
-                        .ignoresSafeArea()
-                    
-                    VStack(spacing: 30) {
-                        titleSection
-                        eventGridSection
-                        
-                        AppButtons.primary(
-                            type: .continueAction,
-                            disabled: selectedEvent == nil
-                        ) {
-                            toShowEventBookingMainTabView = true
-                        }
-                    }
-                    .padding(.top, 50)
-                    
-                    if isLoading {
-                        LoadingIndicator()
-                    }
+        ZStack {
+            AppBackgrounds.gradientBackground
+                .ignoresSafeArea()
+            
+            VStack(spacing: 30) {
+                titleSection
+                eventGridSection
+                
+                AppButtons.primary(
+                    type: .continueAction,
+                    disabled: selectedEvent == nil
+                ) {
+                    toShowEventBookingMainTabView = true
                 }
-                .onAppear {
-                    getEventCategories()
-                }
-                .background(
-                    NavigationLink(
-                        destination: EventBookingMainTabView(),
-                        isActive: $toShowEventBookingMainTabView
-                    ) { EmptyView() }
-                        .hidden()
-                )
-                .navigationBarBackButtonHidden()
+            }
+            .padding(.top, 50)
+            
+            if isLoading {
+                LoadingIndicator()
             }
         }
+        .onAppear {
+            getEventCategories()
+        }
+        .background(
+            NavigationLink(
+                destination: EventBookingMainTabView(),
+                isActive: $toShowEventBookingMainTabView
+            ) { EmptyView() }
+                .hidden()
+        )
+        .navigationBarBackButtonHidden()
     }
     
     private func getEventCategories() {

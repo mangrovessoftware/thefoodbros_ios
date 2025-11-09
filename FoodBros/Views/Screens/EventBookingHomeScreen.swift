@@ -8,29 +8,26 @@
 import SwiftUI
 
 struct EventBookingHomeScreen: View {
-    @State private var selectedEvent: String = "Select Event"
+    @State private var selectedEvent: EventCategory?
     @State private var isEditing: Bool = false
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                ZStack {
-                    AppBackgrounds.gradientBackground
-                        .ignoresSafeArea()
-                    
-                    VStack(spacing: 24) {
-                        eventButton
-                        
-                        Spacer()
-                    }
-                    .padding()
-                }
-                .sheet(isPresented: $isEditing) {
-                    EventChoiceScreen()
-                }
-                .navigationTitle("My Events")
-                .navigationBarTitleDisplayMode(.large)
+        ZStack {
+            AppBackgrounds.gradientBackground
+                .ignoresSafeArea()
+            
+            VStack(spacing: 24) {
+                eventButton
+                
+                Spacer()
             }
+            .padding()
+        }
+        .onAppear {
+            isEditing = selectedEvent == nil
+        }
+        .sheet(isPresented: $isEditing) {
+            EventChoiceScreen()
         }
     }
 }
@@ -45,7 +42,7 @@ extension EventBookingHomeScreen {
                     Text("Your Event")
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
-                    Text(selectedEvent)
+                    Text(selectedEvent?.name ?? "Select your event")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.white)

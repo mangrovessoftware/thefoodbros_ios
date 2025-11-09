@@ -6,26 +6,22 @@ struct ChoiceScreen: View {
     @State private var showEventChoiceScreen: Bool = false
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                ZStack {
-                    AppBackgrounds.gradientBackground
-                    
-                    VStack(spacing: 25) {
-                        AppIcons.appLogo()
-                        titleSection
-                        choiceSection
-                        Spacer()
-                    }
-                    .padding(.horizontal, 30)
-                    .padding(.top, 100)
-                }
-                .navigationBarHidden(true)
-                .onAppear {
-                    withAnimation(.easeOut(duration: 1.0)) {
-                        animateButtons = true
-                    }
-                }
+        ZStack {
+            AppBackgrounds.gradientBackground
+            
+            VStack(spacing: 25) {
+                AppIcons.appLogo()
+                titleSection
+                choiceSection
+                Spacer()
+            }
+            .padding(.horizontal, 30)
+            .padding(.top, 100)
+        }
+        .navigationBarHidden(true)
+        .onAppear {
+            withAnimation(.easeOut(duration: 1.0)) {
+                animateButtons = true
             }
         }
     }

@@ -46,7 +46,7 @@ struct EventBookingHomeScreen: View {
             EventChoiceScreen(selectedEvent: $selectedEvent, isEditing: $isEditing)
         }
         .navigationTitle("My Events")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
     }
     
@@ -73,7 +73,8 @@ extension EventBookingHomeScreen {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Your Event")
                         .font(.caption)
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.white.opacity(0.85))
+                    
                     Text(selectedEvent?.name ?? "Select your event")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -82,20 +83,33 @@ extension EventBookingHomeScreen {
                 Spacer()
                 Image(systemName: "pencil")
                     .foregroundColor(.white)
-                    .padding(8)
-                    .background(Color.white.opacity(0.2))
+                    .padding(10)
+                    .background(
+                        Color.white.opacity(0.25)
+                            .blur(radius: 2)
+                    )
                     .clipShape(Circle())
             }
             .padding()
             .background(
-                LinearGradient(
-                    colors: [Color.red.opacity(0.9), Color.red],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
+                ZStack {
+                    LinearGradient(
+                        colors: [Color.red.opacity(0.85), Color.red, Color.pink],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        .blur(radius: 2)
+                }
             )
             .cornerRadius(20)
-            .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+            .shadow(color: Color.black.opacity(0.35), radius: 15, x: 0, y: 8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.white.opacity(0.05), lineWidth: 1)
+            )
         }
         .buttonStyle(PlainButtonStyle())
     }

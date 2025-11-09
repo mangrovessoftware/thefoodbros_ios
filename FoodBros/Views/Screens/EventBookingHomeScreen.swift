@@ -70,7 +70,7 @@ extension EventBookingHomeScreen {
             isEditing = true
         }) {
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text("Your Event")
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.85))
@@ -83,14 +83,15 @@ extension EventBookingHomeScreen {
                 Spacer()
                 Image(systemName: "pencil")
                     .foregroundColor(.white)
-                    .padding(10)
+                    .padding(8)
                     .background(
                         Color.white.opacity(0.25)
                             .blur(radius: 2)
                     )
                     .clipShape(Circle())
             }
-            .padding()
+            .padding(.vertical, 10)
+            .padding(.horizontal)
             .background(
                 ZStack {
                     LinearGradient(
@@ -98,7 +99,6 @@ extension EventBookingHomeScreen {
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
-                    
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.white.opacity(0.1), lineWidth: 1)
                         .blur(radius: 2)

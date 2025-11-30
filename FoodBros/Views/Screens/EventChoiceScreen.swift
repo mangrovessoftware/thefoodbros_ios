@@ -9,11 +9,8 @@ import SwiftUI
 
 struct EventChoiceScreen: View {
     
-    @State var eventCategories: [EventCategory] = []
-    @Binding var selectedEvent: EventCategory?
-    
+    @ObservedObject var viewModel: EventBookingViewModel
     @Binding var isEditing: Bool
-    @State private var isLoading: Bool = false
     
     private let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -31,29 +28,12 @@ struct EventChoiceScreen: View {
                 
                 AppButtons.primary(
                     type: .saveEvent,
-                    disabled: selectedEvent == nil
+                    disabled: viewModel.selectedEvent == nil
                 ) {
                     isEditing = false
                 }
             }
             .padding(.top, 50)
-            
-            if isLoading {
-                LoadingIndicator()
-            }
-        }
-        .onAppear {
-            getEventCategories()
-        }
-    }
-    
-    private func getEventCategories() {
-        isLoading = true
-        EventBookingPresenter().getEventCategories { eventCategories in
-            DispatchQueue.main.async {
-                self.eventCategories = eventCategories
-                self.isLoading = false
-            }
         }
     }
 }
@@ -69,18 +49,21 @@ extension EventChoiceScreen {
     var eventGridSection: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(eventCategories) { event in
+                ForEach(viewModel.eventCategories) { event in
                     Button {
                         withAnimation(.spring()) {
-                            selectedEvent = selectedEvent?.id == event.id ? nil : event
+                            viewModel.selectedEvent = viewModel.selectedEvent?.id == event.id ? nil : event
                         }
                     } label: {
                         VStack(spacing: 8) {
                             Image(systemName: event.iconName)
                                 .font(.system(size: 35))
+                                .foregroundColor(.primary)
+                            
                             Text(event.name)
                                 .font(.headline)
                                 .multilineTextAlignment(.center)
+                                .foregroundColor(.primary)
                         }
                         .padding()
                         .frame(maxWidth: .infinity, minHeight: 120)
@@ -91,9 +74,8 @@ extension EventChoiceScreen {
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(selectedEvent?.id == event.id ? Color(.primary) : .clear, lineWidth: 2)
+                                .stroke(viewModel.selectedEvent?.id == event.id ? Color(.systemBlue) : .clear, lineWidth: 2)
                         )
-                        .foregroundColor(.black)
                     }
                 }
             }

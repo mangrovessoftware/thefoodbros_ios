@@ -9,6 +9,9 @@ import SwiftUI
 
 struct EventBookingHomeScreen: View {
     @State private var selectedEvent: EventCategory?
+    
+    @State private var selectedTile: ServiceTile?
+    @State var serviceTiles: [ServiceTile] = []
     @State private var promos: [Promo] = []
     
     @State private var isEditing: Bool = false
@@ -16,6 +19,11 @@ struct EventBookingHomeScreen: View {
     
     @State private var currentPage: Int = 0
     @State private var autoScrollTimer: Timer?
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 20),
+        GridItem(.flexible(), spacing: 20)
+    ]
 
     var body: some View {
         ZStack {
@@ -26,6 +34,8 @@ struct EventBookingHomeScreen: View {
                 eventButton
                 
                 promoBanner
+                
+                serviceGridSection
                 
                 Spacer()
             }
@@ -38,6 +48,7 @@ struct EventBookingHomeScreen: View {
         .onAppear {
             isEditing = selectedEvent == nil
             getPromos()
+            getServiceTiles()
         }
         .onDisappear {
             stopAutoScroll()
@@ -60,6 +71,14 @@ struct EventBookingHomeScreen: View {
                 self.restartAutoScrollIfNeeded()
                 self.isLoading = false
             }
+        }
+    }
+    
+    private func getServiceTiles() {
+        isLoading = true
+        EventBookingService().getServiceTiles { serviceTiles in
+            self.serviceTiles = serviceTiles
+            isLoading = false
         }
     }
 }
@@ -175,6 +194,42 @@ extension EventBookingHomeScreen {
             }
             .opacity(promos.count > 1 ? 1 : 0)
         }
+    }
+    
+    var serviceGridSection: some View {
+        LazyVGrid(columns: columns, spacing: 20) {
+            ForEach($serviceTiles) { tile in
+                Button {
+                    withAnimation(.spring()) {
+                        let value = tile.wrappedValue
+                        selectedTile = (selectedTile?.id == value.id) ? nil : value
+                    }
+                } label: {
+                    VStack(spacing: 8) {
+                        Image(systemName: tile.wrappedValue.iconName)
+                            .font(.system(size: 35))
+                            .foregroundStyle(Color(.primary))
+                        Text(tile.wrappedValue.tileName ?? "")
+                            .font(.headline)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, minHeight: 100)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.white)
+                            .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 2)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(selectedTile?.id == tile.wrappedValue.id ? Color(.primary) : .clear, lineWidth: 2)
+                    )
+                    .foregroundColor(.black)
+                }
+            }
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 20)
     }
     
     private func restartAutoScrollIfNeeded() {

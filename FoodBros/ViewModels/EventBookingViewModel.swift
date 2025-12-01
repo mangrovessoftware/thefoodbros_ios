@@ -26,6 +26,7 @@ class EventBookingViewModel: ObservableObject {
     func loadData() {
         getEventCategories()
         getServiceTiles()
+        getPromos()
     }
     
     private func getEventCategories() {

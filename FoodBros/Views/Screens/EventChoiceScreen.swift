@@ -74,7 +74,7 @@ extension EventChoiceScreen {
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(viewModel.selectedEvent?.id == event.id ? Color(.systemBlue) : .clear, lineWidth: 2)
+                                .stroke(viewModel.selectedEvent?.id == event.id ? Color(.primary) : .clear, lineWidth: 2)
                         )
                     }
                 }

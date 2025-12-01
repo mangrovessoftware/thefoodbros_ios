@@ -12,6 +12,10 @@ struct EventChoiceScreen: View {
     @ObservedObject var viewModel: EventBookingViewModel
     @Binding var isEditing: Bool
     
+    private var isLoadingNeeded: Bool {
+        return viewModel.eventCategories.isEmpty
+    }
+    
     private let columns = [
         GridItem(.flexible(), spacing: 20),
         GridItem(.flexible(), spacing: 20)
@@ -34,6 +38,10 @@ struct EventChoiceScreen: View {
                 }
             }
             .padding(.top, 50)
+            
+            if isLoadingNeeded {
+                LoadingIndicator()
+            }
         }
     }
 }
